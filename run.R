@@ -49,9 +49,17 @@ server <- function(input, output,session) {
 
   download.file("https://covid.ourworldindata.org/data/ecdc/full_data.csv", "full_data.csv")
   data <- read.csv(file = 'full_data.csv')
-  datos_uy <- data[data$location == 'Uruguay',]
-  times <- as.Date(datos_uy[,"date"])
-  serie <- xts(datos_uy[,"new_cases"],order.by=times)
+
+  #saco datos de UY de otro lado dejo bajado el otro para los paises
+  download.file("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv", "jhu.csv")
+  jhu <- read.csv(file = 'jhu.csv')
+  acum <- tail(t(jhu[data$Country.Region=="Uruguay",]),-4)
+
+  times <- as.Date(row.names(acum),"X%m.%d.%y")
+  acum <- xts(as.numeric(acum),order.by=times)
+  acum <- acum["2020-03-13/"]
+  serie <- diff(acum)[-1]
+  times <- time(serie)
 
   output$plot_incidence <- renderPlot({
     barplot(serie,main="Incidencia", ylab="Casos")
@@ -63,7 +71,7 @@ server <- function(input, output,session) {
   delta_si<-30
   discrete_si_distr <- discr_si(seq(0, delta_si), mean_covid_si, sd_covid_si)
 
-  res <- estimate_R(incid = pmax(datos_uy[,"new_cases"],0),
+  res <- estimate_R(incid = pmax(as.numeric(I),0),
                   method = "non_parametric_si",
                   config = make_config(list(si_distr = discrete_si_distr)))
 
