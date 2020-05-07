@@ -53,7 +53,7 @@ server <- function(input, output,session) {
   #saco datos de UY de otro lado dejo bajado el otro para los paises
   download.file("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv", "jhu.csv")
   jhu <- read.csv(file = 'jhu.csv')
-  acum <- tail(t(jhu[data$Country.Region=="Uruguay",]),-4)
+  acum <- tail(t(jhu[jhu$Country.Region=="Uruguay",]),-4)
 
   times <- as.Date(row.names(acum),"X%m.%d.%y")
   acum <- xts(as.numeric(acum),order.by=times)
