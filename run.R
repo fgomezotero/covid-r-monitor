@@ -24,7 +24,7 @@ collapsible = TRUE),
 collapsible = TRUE)
     ),
     fluidRow(
-      box(title = "Sobre la estimacion:", HTML("<strong>Metodologia: </strong> Documento realizado por E. Mordecki explicando la metodologia : <a href='http://www.cmat.edu.uy/~mordecki/EpiEstim_reporte.pdf'>Reporte</a>.<br />"),HTML("<strong>Origen de los datos:</strong> Los datos de Uruguay y otros países son extraídos de <a href='https://ourworldindata.org/coronavirus-source-data'>ourworldindata</a>. Esto puede presentar discrepanacias con datos oficiales de cada país."),status="primary",solidHeader = TRUE,
+      box(title = "Sobre la estimacion:", HTML("<strong>Metodologia: </strong> Documento realizado por E. Mordecki explicando la metodologia : <a href='http://www.cmat.edu.uy/~mordecki/EpiEstim_reporte.pdf'>Reporte</a>.<br />"),HTML("<strong>Origen de los datos:</strong> Los datos de Uruguay y otros países son extraídos de <a href='https://ourworldindata.org/coronavirus-source-data'>ourworldindata</a> y del repositorio de Johns Hopkins University <a href='https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'>ourworldindata</a>. Esto puede presentar discrepanacias con datos oficiales de cada país."),status="primary",solidHeader = TRUE,
 collapsible = TRUE),
       box(title = "Descargar los resultados", downloadLink("downloadData", "Resultados de estimacion"),status="primary",solidHeader = TRUE,
 collapsible = TRUE)
@@ -58,7 +58,7 @@ server <- function(input, output,session) {
   times <- as.Date(row.names(acum),"X%m.%d.%y")
   acum <- xts(as.numeric(acum),order.by=times)
   acum <- acum["2020-03-13/"]
-  serie <- diff(acum)[-1]
+  serie <- pmax(diff(acum)[-1],0)
   times <- time(serie)
 
   output$plot_incidence <- renderPlot({
@@ -71,7 +71,7 @@ server <- function(input, output,session) {
   delta_si<-30
   discrete_si_distr <- discr_si(seq(0, delta_si), mean_covid_si, sd_covid_si)
 
-  res <- estimate_R(incid = pmax(as.numeric(serie),0),
+  res <- estimate_R(incid = as.numeric(serie),
                   method = "non_parametric_si",
                   config = make_config(list(si_distr = discrete_si_distr)))
 
