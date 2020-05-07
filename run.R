@@ -71,7 +71,7 @@ server <- function(input, output,session) {
   delta_si<-30
   discrete_si_distr <- discr_si(seq(0, delta_si), mean_covid_si, sd_covid_si)
 
-  res <- estimate_R(incid = pmax(as.numeric(I),0),
+  res <- estimate_R(incid = pmax(as.numeric(serie),0),
                   method = "non_parametric_si",
                   config = make_config(list(si_distr = discrete_si_distr)))
 
