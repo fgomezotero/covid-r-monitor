@@ -24,7 +24,7 @@ collapsible = TRUE),
 collapsible = TRUE)
     ),
     fluidRow(
-      box(title = "Sobre la estimacion:", HTML("<strong>Metodologia: </strong> Documento realizado por E. Mordecki explicando la metodologia : <a href='http://www.cmat.edu.uy/~mordecki/EpiEstim_reporte.pdf'>Reporte</a>.<br />"),HTML("<strong>Origen de los datos:</strong> Los datos de Uruguay y otros países son extraídos de <a href='https://ourworldindata.org/coronavirus-source-data'>ourworldindata</a> y del repositorio de Johns Hopkins University <a href='https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'>ourworldindata</a>. Esto puede presentar discrepanacias con datos oficiales de cada país."),status="primary",solidHeader = TRUE,
+      box(title = "Sobre la estimacion:", HTML("<strong>Metodologia: </strong> Documento realizado por E. Mordecki explicando la metodologia : <a href='http://www.cmat.edu.uy/~mordecki/EpiEstim_reporte.pdf'>Reporte</a>.<br />"),HTML("<strong>Origen de los datos:</strong> Los datos de Uruguay y otros países son extraídos de <a href='https://ourworldindata.org/coronavirus-source-data'>ourworldindata</a> y del repositorio de <a href='https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'>Johns Hopkins University</a>. Esto puede presentar discrepanacias con datos oficiales de cada país."),status="primary",solidHeader = TRUE,
 collapsible = TRUE),
       box(title = "Descargar los resultados", downloadLink("downloadData", "Resultados de estimacion"),status="primary",solidHeader = TRUE,
 collapsible = TRUE)
