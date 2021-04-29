@@ -1,3 +1,4 @@
+# This image was tested on Openshift
 FROM rocker/shiny:4.0.3
 
 ENV BASEPATH=/home/shiny/
